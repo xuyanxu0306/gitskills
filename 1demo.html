@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>无标题文档</title>
+<script>
+
+/*var x = 0;
+console.log(void(x=123));
+console.log(x);*/
+window.onload = function(){
+	var oDiv = document.getElementById('div1');
+	var oDiv2 = document.getElementById('div2');
+	/*oDiv.attachEvent('onclick',function(){
+		change.call(oDiv);
+	});
+	
+	oDiv2.onclick = function(){
+		oDiv.detachEvent('onclick',change);
+	};*/
+	
+	function change(){
+		alert(this);
+	}
+	
+	addEvent(oDiv,'click',change);
+	
+	oDiv2.onclick = function(){
+		removeEvent(oDiv,'click',change);
+	};
+	
+	function addEvent(obj,event,fn){
+		
+		obj['bind'+event] = obj['bind'+event] || {};
+		obj['bind'+event]['bind'+fn] = obj['bind'+event]['bind'+fn] || function(){
+			fn.call(obj);
+	}
+		
+		obj.attachEvent('on'+event,obj['bind'+event]['bind'+fn]);
+		
+	}
+	function removeEvent(obj,event,fn){
+		if( obj['bind'+event] &&  obj['bind'+event]['bind'+fn]){
+			obj.detachEvent('on'+event , obj['bind'+event]['bind'+fn]);
+		}
+	}
+	
+};
+</script>
+</head>
+
+<body>
+<!--<a href="javascript:void(0);">aaaaa</a>-->
+<div id="div1">aaaaaaaa</div>
+<div id="div2">bbbbbbbb</div>
+</body>
+</html>
